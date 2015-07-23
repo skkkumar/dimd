@@ -1,0 +1,34 @@
+
+CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+SET(PROJECTNAME collectdata)
+PROJECT(${PROJECTNAME})
+
+find_package(YARP REQUIRED)
+find_package(ICUB REQUIRED)
+find_package(ICUBcontrib REQUIRED)
+find_package(Gurls QUIET)
+list(APPEND CMAKE_MODULE_PATH ${YARP_MODULE_PATH} ${ICUBCONTRIB_MODULE_PATH})
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${YARP_MODULE_PATH} ${ICUB_MODULE_PATH})
+
+find_package(OpenCV)
+
+include(ICUBcontribHelpers)
+include(ICUBcontribOptions)
+  add_definitions(${Gurls_DEFINITIONS})
+
+file(GLOB source collectdata.cpp)
+file(GLOB header collectdata.h)
+
+source_group("Source Files" FILES ${source})
+source_group("Header Files" FILES ${header})
+
+include_directories(${YARP_INCLUDE_DIRS}
+                    ${ICUB_INCLUDE_DIRS}
+)
+include_directories(${Gurls_INCLUDE_DIRS})
+
+add_executable(${PROJECTNAME} ${source} ${header})
+
+target_link_libraries(${PROJECTNAME} icubmod ${YARP_LIBRARIES} ${OpenCV_LIBRARIES} ${Gurls_LIBRARIES})
+
+install(TARGETS ${PROJECTNAME} RUNTIME DESTINATION bin)
