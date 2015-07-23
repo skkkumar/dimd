@@ -16,8 +16,8 @@ include(ICUBcontribHelpers)
 include(ICUBcontribOptions)
   add_definitions(${Gurls_DEFINITIONS})
 
-file(GLOB source collectdata.cpp)
-file(GLOB header collectdata.h)
+file(GLOB source *.cpp)
+file(GLOB header *.h)
 
 source_group("Source Files" FILES ${source})
 source_group("Header Files" FILES ${header})
